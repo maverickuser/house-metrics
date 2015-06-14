@@ -1,4 +1,4 @@
-package com.mnnit.housing.places;
+package com.mnnit.housing.model;
 
 import java.util.Collections;
 import java.util.Set;
@@ -67,6 +67,8 @@ public class Place {
 
 	private String vicinity;
 
+    private Long distance;
+
 	public String getFormattedAddress( ) {
 		return this.formattedAddress;
 	}
@@ -111,6 +113,14 @@ public class Place {
 
 	public String getVicinity( ) {
 		return this.vicinity;
+	}
+
+	public Long getDistance() {
+	    return distance;
+	}
+
+	public void setDistance(Long distance) {
+	    this.distance = distance;
 	}
 	
 }

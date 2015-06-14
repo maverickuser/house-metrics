@@ -1,5 +1,7 @@
 package com.mnnit.housing.geocoding.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
@@ -14,6 +16,7 @@ import com.mnnit.housing.geocoding.service.GeoCodingService;
  *  https://github.com/googlemaps/google-maps-services-java/
  *
  */
+@Service
 public class GeoCodingServiceImpl implements GeoCodingService {
 
 	private static final LogHandler logHandler = new JavaLoggingLogHandler(

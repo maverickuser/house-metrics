@@ -1,4 +1,4 @@
-package com.mnnit.housing.places;
+package com.mnnit.housing.model;
 
 import java.util.Collections;
 import java.util.Iterator;

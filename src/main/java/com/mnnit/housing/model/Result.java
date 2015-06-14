@@ -1,4 +1,4 @@
-package com.mnnit.housing.places;
+package com.mnnit.housing.model;
 /**
  * 
  * POJO Result class for setting service response
