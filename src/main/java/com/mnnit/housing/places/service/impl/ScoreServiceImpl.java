@@ -1,8 +1,12 @@
 package com.mnnit.housing.places.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,7 @@ import com.mnnit.housing.common.MetricsException;
 import com.mnnit.housing.distance.service.DistanceMatrixService;
 import com.mnnit.housing.geocoding.service.GeoCodingService;
 import com.mnnit.housing.internal.service.CategoryScoreService;
+import com.mnnit.housing.internal.service.PlaceScoreService;
 import com.mnnit.housing.model.Place;
 import com.mnnit.housing.model.PlacesResult;
 import com.mnnit.housing.places.service.PlacesService;
@@ -40,6 +45,9 @@ public class ScoreServiceImpl implements ScoreService {
     private List<CategoryScoreService> categoryScoreServices;
 
     @Autowired
+    private List<PlaceScoreService> placeScoreServices;
+
+    @Autowired
     private TopScoreAlgorithm scoreAlgorithm;
 
     @Value(value = "${google.map.apikey}")
@@ -53,10 +61,21 @@ public class ScoreServiceImpl implements ScoreService {
 	String coordinates = getCoordinates(address);
 	PlacesResult result = getNearbyPlaces(coordinates);
 
+	if (!result.isOkay()) {
+	    throw new RuntimeException("Failed to get nearby places "
+		    + result.getStatus());
+	}
+
 	result = distanceMatrixService.updatePlacesWithDistance(result,
 		coordinates);
+	Map<PlaceScoreService, List<Place>> servicePlaceMap = prepareGraph(result
+		.asList());
+	Map<CategoryScoreService, Long> catCcoresMap = new HashMap<CategoryScoreService, Long>();
+	for (CategoryScoreService cService : categoryScoreServices) {
+	    catCcoresMap.put(cService, cService.getScore(servicePlaceMap));
+	}
 
-	return null;
+	return scoreAlgorithm.calculate(catCcoresMap);
     }
 
     private String getCoordinates(String address) {
@@ -74,7 +93,8 @@ public class ScoreServiceImpl implements ScoreService {
 
     private PlacesResult getNearbyPlaces(String coordinates) {
 	try {
-	    return placesService.getNearPlaces(coordinates, new String[1]);
+	    return placesService.getNearPlaces(coordinates,
+		    new String[] { "grocery_or_supermarket" });
 	} catch (MetricsException e) {
 	    throw new RuntimeException(
 		    "Failed to find nearby places for coordinates:"
@@ -82,13 +102,21 @@ public class ScoreServiceImpl implements ScoreService {
 	}
     }
 
-    private Long getScore(List<Place> places) {
-	Long score = 0L;
+    private Map<PlaceScoreService, List<Place>> prepareGraph(
+	    List<Place> places) {
+	Map<PlaceScoreService, List<Place>> graph = new HashMap<>();
 	for (Place place : places) {
-
+	    for (PlaceScoreService placeScoreService : placeScoreServices) {
+		if (!CollectionUtils.intersection(placeScoreService.getTypes(),
+			place.getTypes()).isEmpty()) {
+		    if (graph.get(placeScoreService) == null) {
+			graph.put(placeScoreService, new ArrayList<Place>());
+		    }
+		    graph.get(placeScoreService).add(place);
+		}
+	    }
 	}
-
-	return score;
+	return graph;
     }
 
 }

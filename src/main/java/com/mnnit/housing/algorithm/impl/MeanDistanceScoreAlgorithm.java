@@ -3,6 +3,8 @@ package com.mnnit.housing.algorithm.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.mnnit.housing.algorithm.CategoryScoreAlgorithm;
 import com.mnnit.housing.algorithm.PlaceScoreAlgorithm;
 import com.mnnit.housing.internal.service.PlaceScoreService;
@@ -12,7 +14,8 @@ import com.mnnit.housing.model.Place;
  * @author manish
  *
  */
-public class AverageDistanceScoreAlgorithm implements CategoryScoreAlgorithm,
+@Service(value = "meanDistanceScoreAlgorithm")
+public class MeanDistanceScoreAlgorithm implements CategoryScoreAlgorithm,
 	PlaceScoreAlgorithm {
 
     /*
@@ -37,8 +40,12 @@ public class AverageDistanceScoreAlgorithm implements CategoryScoreAlgorithm,
      */
     @Override
     public Long calculate(Map<? extends PlaceScoreService, Long> scoresMap) {
-	// TODO Auto-generated method stub
-	return null;
+	Long total = 0L;
+	for (Long score : scoresMap.values()) {
+	    total += score;
+	}
+
+	return (total / scoresMap.size());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.mnnit.housing.internal.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mnnit.housing.model.Place;
 
@@ -10,6 +11,6 @@ import com.mnnit.housing.model.Place;
  */
 public interface CategoryScoreService {
 
-    Long getScore(List<Place> places);
+    Long getScore(Map<PlaceScoreService, List<Place>> graph);
 
 }

@@ -10,6 +10,18 @@ import com.mnnit.housing.model.Place;
  */
 public interface PlaceScoreService {
     
+    /**
+     * Get the score for the list of places.
+     * 
+     * @param places
+     * @return
+     */
     Long getScore(List<Place> places);
 
+    /**
+     * Get the types of the places supported by the service.
+     * 
+     * @return
+     */
+    List<String> getTypes();
 }

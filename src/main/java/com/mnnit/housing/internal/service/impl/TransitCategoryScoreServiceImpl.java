@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mnnit.housing.algorithm.CategoryScoreAlgorithm;
 import com.mnnit.housing.internal.service.CategoryScoreService;
+import com.mnnit.housing.internal.service.PlaceScoreService;
 import com.mnnit.housing.internal.service.TransitScoreService;
 import com.mnnit.housing.model.Place;
 
@@ -18,10 +22,10 @@ import com.mnnit.housing.model.Place;
 @Service
 public class TransitCategoryScoreServiceImpl implements CategoryScoreService {
 
-    // @Autowired
+    @Autowired
     private List<TransitScoreService> transitScoreServices;
 
-    // @Autowired
+    @Resource(name = "meanDistanceScoreAlgorithm")
     // This algo is to combine the results of each transit score
     private CategoryScoreAlgorithm algorithm;
 
@@ -29,10 +33,10 @@ public class TransitCategoryScoreServiceImpl implements CategoryScoreService {
      * @see com.mnnit.housing.internal.service.CategoryScoreService#getScore(java.util.List)
      */
     @Override
-    public Long getScore(List<Place> places) {
+    public Long getScore(Map<PlaceScoreService, List<Place>> graph) {
 	Map<TransitScoreService, Long> scoreMap = new HashMap<TransitScoreService, Long>();
 	for (TransitScoreService tss : transitScoreServices) {
-	    scoreMap.put(tss, tss.getScore(places));
+	    scoreMap.put(tss, tss.getScore(graph.get(tss)));
 	}
 
 	return algorithm.calculate(scoreMap);

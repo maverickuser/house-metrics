@@ -2,6 +2,8 @@ package com.mnnit.housing.algorithm.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.mnnit.housing.algorithm.PlaceScoreAlgorithm;
 import com.mnnit.housing.model.Place;
 
@@ -9,6 +11,7 @@ import com.mnnit.housing.model.Place;
  * @author manish
  *
  */
+@Service(value = "exponentialDistanceDecayAlgorithm")
 public class ExponentialDistanceDecayAlgorithm implements PlaceScoreAlgorithm {
 
     /* (non-Javadoc)

@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -27,11 +28,13 @@ public class PlacesServiceImpl implements PlacesService {
 	    PlacesServiceImpl.class);
     private static final String NEARBY_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 
-    // This should be initialised during startup
+    @Value(value = "${google.map.apikey}")
     private String apiKey = "";
+
     /**
-     * The distance from the centre for whihc POi need to be identified
+     * The distance from the center for which POi need to be identified
      */
+    @Value(value = "${radius.of.interest}")
     private String radius = "";
 
     /**
