@@ -16,7 +16,7 @@ public interface PlaceScoreService {
      * @param places
      * @return
      */
-    Long getScore(List<Place> places);
+    Double getScore(List<Place> places);
 
     /**
      * Get the types of the places supported by the service.
@@ -24,4 +24,11 @@ public interface PlaceScoreService {
      * @return
      */
     List<String> getTypes();
+    
+    /**
+     * Get the weighted score for the 
+     * @param places
+     * @return
+     */
+    Double getWeightedScore(List<Place> places);
 }

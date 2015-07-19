@@ -28,7 +28,7 @@ public class TrainStationScoreServiceImpl implements TransitScoreService {
      * @see com.mnnit.housing.internal.service.PlaceScoreService#getScore(java.util.List)
      */
     @Override
-    public Long getScore(List<Place> places) {
+    public Double getScore(List<Place> places) {
 	// Iterate over the list and get only Airports.
 	// pass the new airport list to the algorithm to get the score.
 
@@ -44,5 +44,11 @@ public class TrainStationScoreServiceImpl implements TransitScoreService {
     public List<String> getTypes() {
 	return types;
     }
+
+	@Override
+	public Double getWeightedScore(List<Place> places) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

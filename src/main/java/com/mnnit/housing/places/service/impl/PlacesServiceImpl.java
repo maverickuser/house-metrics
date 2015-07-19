@@ -32,15 +32,9 @@ public class PlacesServiceImpl implements PlacesService {
     private String apiKey = "";
 
     /**
-     * The distance from the center for which POi need to be identified
-     */
-    @Value(value = "${radius.of.interest}")
-    private String radius = "";
-
-    /**
      * {@inheritDoc}
      */
-    public PlacesResult getNearPlaces(String latLon, String[] types)
+    public PlacesResult getNearPlaces(String latLon, String[] types,String radius)
 	    throws MetricsException {
 	if (apiKey == null || latLon == null || radius == null) {
 	    throw new IllegalArgumentException(new NullPointerException(

@@ -18,9 +18,24 @@ public class ExponentialDistanceDecayAlgorithm implements PlaceScoreAlgorithm {
      * @see com.mnnit.housing.internal.service.ScoreAlgorithm#calculate(java.util.List)
      */
     @Override
-    public Long calculate(List<Place> places) {
-	// TODO Auto-generated method stub
-	return null;
+    public Double calculate(List<Place> places) {
+    	if(places==null || places.size()==0){
+			return 0.0;
+		}
+    	//calculate mean distance for facilities
+    	int i=0;
+    	long distance=0;
+    	for(Place place:places){
+    		if(place!=null){
+	    		distance=distance+place.getDistance();
+	    		i++;
+    		}
+    	}
+    	double meanDistance=distance/(i*100);
+    
+    	//calculate the score from exponential decay function
+    	double score =100*Math.pow(.90,meanDistance);
+    	return score;
     }
 
 }

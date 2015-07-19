@@ -13,6 +13,6 @@ import com.mnnit.housing.model.Place;
  */
 public interface PlaceScoreAlgorithm {
 
-    Long calculate(List<Place> places);
+    Double calculate(List<Place> places);
 
 }

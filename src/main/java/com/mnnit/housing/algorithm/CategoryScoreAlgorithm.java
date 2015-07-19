@@ -13,6 +13,6 @@ import com.mnnit.housing.internal.service.PlaceScoreService;
  */
 public interface CategoryScoreAlgorithm {
 
-    Long calculate(Map<? extends PlaceScoreService, Long> scoresMap);
+    Double calculate(Map<? extends PlaceScoreService, Long> scoresMap);
 
 }

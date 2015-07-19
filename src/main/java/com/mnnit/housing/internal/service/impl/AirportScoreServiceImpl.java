@@ -15,6 +15,7 @@ import com.mnnit.housing.model.Place;
  * @author manish
  *
  */
+
 @Service
 public class AirportScoreServiceImpl implements TransitScoreService {
 
@@ -29,7 +30,7 @@ public class AirportScoreServiceImpl implements TransitScoreService {
      * @see com.mnnit.housing.internal.service.PlaceScoreService#getScore(java.util.List)
      */
     @Override
-    public Long getScore(List<Place> places) {
+    public Double getScore(List<Place> places) {
 	// Iterate over the list and get only Airports.
 	// pass the new airport list to the algorithm to get the score.
 
@@ -46,4 +47,11 @@ public class AirportScoreServiceImpl implements TransitScoreService {
 	return types;
     }
 
+	@Override
+	public Double getWeightedScore(List<Place> places) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    
 }

@@ -11,6 +11,6 @@ import com.mnnit.housing.model.Place;
  */
 public interface CategoryScoreService {
 
-    Long getScore(Map<PlaceScoreService, List<Place>> graph);
+    Double getScore(Map<PlaceScoreService, List<Place>> graph);
 
 }

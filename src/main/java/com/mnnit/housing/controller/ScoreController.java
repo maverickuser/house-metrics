@@ -17,7 +17,7 @@ public class ScoreController {
     private ScoreService scoreService;
 
     @RequestMapping(value = "/score")
-    public Long getScore(String address) {
+    public Double getScore(String address) {
 	return scoreService.getScore(address);
     }
 

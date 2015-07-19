@@ -44,7 +44,7 @@ public class GeoCodingServiceImplTest {
 	@Test
 	public void testGeoCoding() throws Exception {
 		GeocodingResult[] results = geoCodingService.getGeoCodingForAddress(
-				API_KEY, "1600 Amphitheatre Parkway Mountain View, CA 94043");
+				API_KEY, "nar vihar 2 sector 34 noida 201301");
 		Assert.assertNotNull(results[0].formattedAddress);
 		Assert.assertNotNull(results[0].partialMatch);
 		Assert.assertNotNull(results[0].geometry.location);

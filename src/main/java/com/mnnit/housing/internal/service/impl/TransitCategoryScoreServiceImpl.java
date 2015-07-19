@@ -1,6 +1,5 @@
 package com.mnnit.housing.internal.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +32,15 @@ public class TransitCategoryScoreServiceImpl implements CategoryScoreService {
      * @see com.mnnit.housing.internal.service.CategoryScoreService#getScore(java.util.List)
      */
     @Override
-    public Long getScore(Map<PlaceScoreService, List<Place>> graph) {
-	Map<TransitScoreService, Long> scoreMap = new HashMap<TransitScoreService, Long>();
+    public Double getScore(Map<PlaceScoreService, List<Place>> graph) {
+	/*Map<TransitScoreService, Double> scoreMap = new HashMap<TransitScoreService, Double>();
 	for (TransitScoreService tss : transitScoreServices) {
 	    scoreMap.put(tss, tss.getScore(graph.get(tss)));
 	}
 
 	return algorithm.calculate(scoreMap);
-    }
+*/   
+    	return null;
+    	}
 
 }

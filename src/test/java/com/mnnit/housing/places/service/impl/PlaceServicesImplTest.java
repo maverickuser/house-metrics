@@ -19,22 +19,22 @@ public class PlaceServicesImplTest extends BaseTest {
     @Autowired
     private PlacesServiceImpl placesService;
 
-    private String radius = "50";
+    private String radius = "200";
 
     @Test
     public void testNull() throws Exception {
 	try {
-	    placesService.getNearPlaces(null, null);
+	    placesService.getNearPlaces(null, null,null);
 	} catch (Exception e) {
 	    Assert.assertNotNull(e.getCause().toString());
 	}
 	try {
-	    placesService.getNearPlaces(null, null);
+	    placesService.getNearPlaces(null, null,null);
 	} catch (Exception e) {
 	    Assert.assertNotNull(e.getCause().toString());
 	}
 	try {
-	    placesService.getNearPlaces("test", null);
+	    placesService.getNearPlaces("test", null,null);
 	} catch (Exception e) {
 	    Assert.assertNotNull(e.getCause().toString());
 	}
@@ -44,12 +44,22 @@ public class PlaceServicesImplTest extends BaseTest {
     @SuppressWarnings("deprecation")
     @Test
     public void testGetNearPlaces() throws Exception {
-	String latlong = "37.422546,-122.084250";
+	String latlong = "28.585790,77.359899";
 	// types supported
 	// ---https://developers.google.com/places/supported_types
-	String[] types = { "atm", "grocery_or_supermarket", "food", "doctor" };
+	String[] types ={ "store", "Food",
+			"grocery_or_supermarket", "department_store",
+			"convenience_store", "meal_delivery", "meal_takeaway",
+			"bakery", "cafe", "restaurant", "school", "university",
+			"doctor", "hospital", "pharmacy", "health", "plumber",
+			"electrician", "hindu_temple", "hair_care", "beauty_salon",
+			" bank", "atm", "amusement_park", "aquarium",
+			"art_gallery", "library", "book_store", "bowling_alley",
+			"movie_theater", "stadium" };
 	PlacesResult placesResult = placesService.getNearPlaces(latlong,
-		types);
+		types,"300");
+	System.out.println("token-->"+placesResult.getNextPageToken());
+	System.out.println("result size-->"+placesResult.size());
 	Assert.assertEquals("OK", placesResult.getStatus());
 	Assert.assertEquals(true, placesResult.isOkay());
 	Assert.assertNotNull(placesResult.size());
@@ -59,8 +69,10 @@ public class PlaceServicesImplTest extends BaseTest {
 	while (iterator.hasNext()) {
 	    Place place = iterator.next();
 	    Assert.assertNotNull(place.getName());
+	    System.out.println(place.getName());
 	    place.getRating();
 	    place.getTypes().toString();
+	    System.out.println(place.getTypes().toString());
 	    place.getFormattedAddress();
 	    place.getIcon();
 	    place.getId();
@@ -71,10 +83,11 @@ public class PlaceServicesImplTest extends BaseTest {
 	    Assert.assertNotNull(place.getGeometry().getLocation());
 	    Assert.assertNotNull(place.getGeometry().toString());
 	    System.out.println(place.getGeometry().getLocation());
+	    System.out.println("##########################");
 	}
 
 	PlacesResult placesResult1 = placesService.getNearPlaces(latlong,
-		null);
+		null,radius);
 	Assert.assertNotNull(placesResult1);
     }
 
@@ -85,18 +98,13 @@ public class PlaceServicesImplTest extends BaseTest {
 
 	String[] types = { "atm", "grocery_or_supermarket", "food", "doctor" };
 	PlacesResult placesResult = placesService.getNearPlaces(latlong,
-		types);
+		types, radius);
 	Assert.assertEquals("INVALID_REQUEST", placesResult.getStatus());
 	Assert.assertEquals(false, placesResult.isOkay());
 	latlong = "37.422546,-122.084250";
-	// wrong api key
-	PlacesResult placesResult1 = placesService.getNearPlaces(latlong,
-		types);
-	Assert.assertEquals("REQUEST_DENIED", placesResult1.getStatus());
-	Assert.assertEquals(false, placesResult1.isOkay());
 	// types as null
 	PlacesResult placesResult2 = placesService.getNearPlaces(latlong,
-		new String[] { null });
+		new String[] { null }, radius);
 	Assert.assertEquals("ZERO_RESULTS", placesResult2.getStatus());
 	Assert.assertEquals(false, placesResult2.isOkay());
 

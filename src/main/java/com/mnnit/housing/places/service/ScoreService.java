@@ -1,11 +1,17 @@
 package com.mnnit.housing.places.service;
 
+import java.util.Set;
+
+import com.mnnit.housing.model.Place;
+
 /**
  * @author manish
  *
  */
 public interface ScoreService {
 
-    Long getScore(String address);
+    Double getScore(String address);
+    Set<Place> getNearbyPlaces(String address);
+    String getCoordinates(String address);
 
 }

@@ -25,7 +25,7 @@ public class MeanDistanceScoreAlgorithm implements CategoryScoreAlgorithm,
      * com.mnnit.housing.algorithm.PlaceScoreAlgorithm#calculate(java.util.List)
      */
     @Override
-    public Long calculate(List<Place> places) {
+    public Double calculate(List<Place> places) {
 	for (Place place : places) {
 	}
 	return null;
@@ -39,13 +39,8 @@ public class MeanDistanceScoreAlgorithm implements CategoryScoreAlgorithm,
      * .Map)
      */
     @Override
-    public Long calculate(Map<? extends PlaceScoreService, Long> scoresMap) {
-	Long total = 0L;
-	for (Long score : scoresMap.values()) {
-	    total += score;
-	}
-
-	return (total / scoresMap.size());
+    public Double calculate(Map<? extends PlaceScoreService, Long> scoresMap) {
+	return null;
     }
 
 }

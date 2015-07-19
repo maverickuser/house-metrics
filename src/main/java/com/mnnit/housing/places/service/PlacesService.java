@@ -13,6 +13,6 @@ public interface PlacesService {
 	 * @return PlacesResult which has list of places and their details
 	 * @throws MetricsException
 	 */
-    public PlacesResult getNearPlaces(String latLon, String[] types)
+    public PlacesResult getNearPlaces(String latLon, String[] types,String radius)
 	    throws MetricsException;
 }

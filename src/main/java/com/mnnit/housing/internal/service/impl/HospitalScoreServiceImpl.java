@@ -28,7 +28,7 @@ public class HospitalScoreServiceImpl implements HealthScoreService {
      * @see com.mnnit.housing.internal.service.PlaceScoreService#getScore(java.util.List)
      */
     @Override
-    public Long getScore(List<Place> places) {
+    public Double getScore(List<Place> places) {
 	return algorithm.calculate(places);
     }
 
@@ -41,5 +41,11 @@ public class HospitalScoreServiceImpl implements HealthScoreService {
     public List<String> getTypes() {
 	return types;
     }
+
+	@Override
+	public Double getWeightedScore(List<Place> places) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
